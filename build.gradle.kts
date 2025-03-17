@@ -37,7 +37,7 @@ publishing {
     register<MavenPublication>("gpr") {
       groupId = "com.consentframework.consentmanagement"
       artifactId = "checkstyle-config"
-      version = "0.0.2"
+      version = "0.0.3"
 
       from(components["java"])
     }
