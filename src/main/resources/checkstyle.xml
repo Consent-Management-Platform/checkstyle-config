@@ -29,6 +29,8 @@
   </module>
 
   <module name="TreeWalker">
+    <module name="UnusedImports"/>
+    <module name="UnusedLocalVariable"/>
     <module name="OuterTypeFilename"/>
     <module name="IllegalTokenText">
       <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>
