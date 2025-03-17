@@ -3,7 +3,7 @@ package com.consentframework.consentmanagement
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.quality.CheckstyleExtension
-import org.gradle.api.tasks.Copy
+import java.io.File
 import java.net.URI
 
 class CheckstyleConfigPlugin : Plugin<Project> {
@@ -23,49 +23,46 @@ class CheckstyleConfigPlugin : Plugin<Project> {
             }
         }
 
-        // Declare a Checkstyle dependency configuration to simplify referencing its config files
-        project.configurations.create("checkstyleConfig")
+        // Define the target directory for Checkstyle configurations in the client project
+        val targetDir = project.layout.projectDirectory.file("config/checkstyle").asFile
 
-        // Add dependencies
-        project.dependencies.add("checkstyleConfig", "com.consentframework.consentmanagement:checkstyle-config:1.0.12")
-
-        // Create a task to download the Checkstyle config files
-        project.tasks.register("downloadCheckstyleConfig", Copy::class.java) { task ->
-            val checkstyleConfigFiles = project.zipTree(
-                project.configurations.getByName("checkstyleConfig")
-                    .files
-                    .first { it.name.contains("checkstyle-config") }
-            )
-            task.doFirst {
-                println("Files found in checkstyleConfig:")
-                checkstyleConfigFiles.forEach { println(it.name) }
-            }
-            task.from(checkstyleConfigFiles)
-            task.into(project.layout.projectDirectory.file("config/checkstyle"))
-            task.include("checkstyle.xml")
-            task.include("suppressions.xml")
-        }
-
-        // Download Checkstyle config files before running Checkstyle tasks
-        project.tasks.withType(org.gradle.api.plugins.quality.Checkstyle::class.java).configureEach { task ->
-            task.dependsOn("downloadCheckstyleConfig")
-        }
-
-        // Clear downloaded Checkstyle config files when users run "gradle clean"
-        project.tasks.named("clean") { task ->
-            task.doLast {
-                project.delete(project.layout.projectDirectory.file("config/checkstyle"))
-            }
-        }
+        // Copy Checkstyle resources from the plugin's JAR file to the client's target directory
+        copyCheckstyleResources(targetDir, project)
 
         // Configure Checkstyle settings
+        configureCheckstyleExtension(project, targetDir)
+    }
+
+    private fun copyCheckstyleResources(targetDir: File, project: Project) {
+        // Locate resources inside the plugin's JAR file
+        val classLoader = this::class.java.classLoader
+        val resources = listOf(
+            "checkstyle.xml" to File(targetDir, "checkstyle.xml"),
+            "suppressions.xml" to File(targetDir, "suppressions.xml")
+        )
+
+        resources.forEach { (resourceName, targetFile) ->
+            classLoader.getResourceAsStream(resourceName)?.use { inputStream ->
+                // Ensure the target directory exists
+                targetDir.mkdirs()
+
+                // Copy resource file to the target directory
+                targetFile.outputStream().use { outputStream ->
+                    inputStream.copyTo(outputStream)
+                }
+                project.logger.lifecycle("Copied $resourceName to ${targetFile.absolutePath}")
+            } ?: project.logger.warn("Resource $resourceName not found")
+        }
+    }
+
+    private fun configureCheckstyleExtension(project: Project, targetDir: File) {
         val checkstyleExtension = project.extensions.getByType(CheckstyleExtension::class.java)
         checkstyleExtension.toolVersion = "10.16.0"
         checkstyleExtension.isIgnoreFailures = false
-        checkstyleExtension.configFile = project.layout.projectDirectory.file("config/checkstyle/checkstyle.xml").asFile
+        checkstyleExtension.configFile = File(targetDir, "checkstyle.xml")
         checkstyleExtension.configProperties = mapOf(
-            "checkstyle.config.dir" to project.layout.projectDirectory.file("config/checkstyle").asFile,
-            "checkstyle.suppressions.file" to project.layout.projectDirectory.file("config/checkstyle/suppressions.xml").asFile
+            "checkstyle.config.dir" to targetDir,
+            "checkstyle.suppressions.file" to File(targetDir, "suppressions.xml")
         )
     }
 }

@@ -16,19 +16,10 @@ Merge the following code into your build.gradle.kts file:
 
 ```kotlin
 plugins {
-    id("com.consentframework.consentmanagement.checkstyle-config") version "1.0.12"
+    id("com.consentframework.consentmanagement.checkstyle-config") version "1.1.0-alpha"
 }
 
 repositories {
-    repositories {
-        maven {
-            url = uri("https://maven.pkg.github.com/Consent-Management-Platform/checkstyle-config")
-            credentials {
-                username = project.findProperty("gpr.usr") as String? ?: System.getenv("GITHUB_USERNAME")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
     gradlePluginPortal()
 }
 ```
