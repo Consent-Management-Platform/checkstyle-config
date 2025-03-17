@@ -17,7 +17,7 @@
   </module>
   <!-- https://checkstyle.org/filters/suppressionfilter.html -->
   <module name="SuppressionFilter">
-    <property name="file" value="https://raw.githubusercontent.com/Consent-Management-Platform/checkstyle-config/main/suppressions.xml"/>
+    <property name="file" value="https://raw.githubusercontent.com/Consent-Management-Platform/checkstyle-config/main/src/main/resources/suppressions.xml"/>
     <property name="optional" value="true"/>
   </module>
 
