@@ -34,7 +34,7 @@ artifacts {
 }
 
 group = "com.consentframework.consentmanagement"
-version = "1.0.11-alpha"
+version = "1.0.12"
 
 gradlePlugin {
   kotlin {

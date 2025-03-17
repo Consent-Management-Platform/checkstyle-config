@@ -16,7 +16,7 @@ Merge the following code into your build.gradle.kts file:
 
 ```kotlin
 plugins {
-    id("com.consentframework.consentmanagement.checkstyle-config") version "1.0.11-alpha"
+    id("com.consentframework.consentmanagement.checkstyle-config") version "1.0.12"
 }
 
 repositories {

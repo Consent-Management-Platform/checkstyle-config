@@ -27,7 +27,7 @@ class CheckstyleConfigPlugin : Plugin<Project> {
         project.configurations.create("checkstyleConfig")
 
         // Add dependencies
-        project.dependencies.add("checkstyleConfig", "com.consentframework.consentmanagement:checkstyle-config:1.0.11-alpha")
+        project.dependencies.add("checkstyleConfig", "com.consentframework.consentmanagement:checkstyle-config:1.0.12")
 
         // Create a task to download the Checkstyle config files
         project.tasks.register("downloadCheckstyleConfig", Copy::class.java) { task ->
