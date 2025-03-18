@@ -15,13 +15,6 @@ class CheckstyleConfigPlugin : Plugin<Project> {
         project.repositories.maven { repo ->
             repo.setUrl(URI("https://repo.gradle.org/gradle/libs-releases"))
         }
-        project.repositories.maven { repo ->
-            repo.setUrl(URI("https://maven.pkg.github.com/Consent-Management-Platform/checkstyle-config"))
-            repo.credentials {
-                it.username = project.findProperty("gpr.usr") as String? ?: System.getenv("GITHUB_USERNAME")
-                it.password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
-            }
-        }
 
         // Define the target directory for Checkstyle configurations in the client project
         val targetDir = project.layout.projectDirectory.file("config/checkstyle").asFile

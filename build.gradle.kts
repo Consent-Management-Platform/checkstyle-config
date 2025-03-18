@@ -1,7 +1,7 @@
 plugins {
-  `java-gradle-plugin`
-  `maven-publish`
   kotlin("jvm") version "2.1.10"
+
+  id("com.gradle.plugin-publish") version "1.3.1"
 }
 
 repositories {
@@ -34,9 +34,12 @@ artifacts {
 }
 
 group = "com.consentframework.consentmanagement"
-version = "1.1.0"
+version = "1.2.0"
 
 gradlePlugin {
+  website.set("https://github.com/Consent-Management-Platform/checkstyle-config")
+  vcsUrl.set("https://github.com/Consent-Management-Platform/checkstyle-config.git")
+
   kotlin {
     jvmToolchain {
       (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(17))
@@ -47,19 +50,9 @@ gradlePlugin {
     create("checkstyle-config") {
       id = "$group.checkstyle-config"
       implementationClass = "com.consentframework.consentmanagement.CheckstyleConfigPlugin"
-    }
-  }
-}
-
-publishing {
-  repositories {
-    maven {
-      name = "GitHubPackages"
-      url = uri("https://maven.pkg.github.com/Consent-Management-Platform/checkstyle-config")
-      credentials {
-        username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_USERNAME")
-        password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
-      }
+      displayName = "Checkstyle Config Plugin"
+      description = "A Gradle plugin for configuring Checkstyle"
+      tags.set(listOf("checkstyle", "gradle-plugin", "consent-management-platform"))
     }
   }
 }
