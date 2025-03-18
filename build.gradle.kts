@@ -19,7 +19,7 @@ configurations {
 
 dependencies {
   implementation(kotlin("stdlib"))
-  runtimeOnly("org.gradle:gradle-tooling-api:8.12")
+  implementation(gradleApi())
 }
 
 sourceSets {
@@ -34,7 +34,7 @@ artifacts {
 }
 
 group = "com.consentframework.consentmanagement"
-version = "1.2.0"
+version = "1.2.1"
 
 gradlePlugin {
   website.set("https://github.com/Consent-Management-Platform/checkstyle-config")

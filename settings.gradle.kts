@@ -2,6 +2,7 @@ pluginManagement {
   repositories {
     gradlePluginPortal()
     mavenCentral()
+    maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
   }
 }
 

@@ -16,7 +16,7 @@ Merge the following code into your build.gradle.kts file:
 
 ```kotlin
 plugins {
-    id("com.consentframework.consentmanagement.checkstyle-config") version "1.2.0"
+    id("com.consentframework.consentmanagement.checkstyle-config") version "1.2.1"
 }
 
 repositories {
@@ -31,7 +31,6 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
-        maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
     }
 }
 
