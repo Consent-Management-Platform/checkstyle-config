@@ -15,7 +15,7 @@ repositories {
 }
 ```
 
-Merge the following into your settings.gradle.kts file:
+Merge the following code into your settings.gradle.kts file:
 
 ```kotlin
 pluginManagement {
