@@ -1,3 +1,4 @@
 # Ignore generated files
+.gradle
 build
 config

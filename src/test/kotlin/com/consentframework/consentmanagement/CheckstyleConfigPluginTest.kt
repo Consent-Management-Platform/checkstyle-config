@@ -21,4 +21,17 @@ class CheckstyleConfigPluginTest {
         assertNotNull(checkstyleMainTask, "checkstyleMainTask should be found")
         assertEquals(TaskOutcome.SUCCESS, checkstyleMainTask?.outcome)
     }
+
+    @Test
+    fun `test plugin catches checkstyle violations`() {
+        val projectDir = File("src/test/resources/test-project-with-errors")
+        val gradleRunner = GradleRunner.create()
+            .withArguments("--rerun-tasks", "checkstyleMain")
+            .withProjectDir(projectDir)
+            .withPluginClasspath()
+        val result: BuildResult = gradleRunner.buildAndFail()
+        val checkstyleMainTask = result.task(":checkstyleMain")
+        assertNotNull(checkstyleMainTask, "checkstyleMainTask should be found")
+        assertEquals(TaskOutcome.FAILED, checkstyleMainTask?.outcome)
+    }
 }
