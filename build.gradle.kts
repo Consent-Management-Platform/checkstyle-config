@@ -18,8 +18,14 @@ configurations {
 }
 
 dependencies {
+  // Dependencies for running this Gradle plugin
   implementation(kotlin("stdlib"))
   implementation(gradleApi())
+
+  // Unit testing dependencies
+  testImplementation(gradleTestKit())
+  testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 }
 
 sourceSets {
@@ -54,5 +60,11 @@ gradlePlugin {
       description = "A Gradle plugin for configuring Checkstyle"
       tags.set(listOf("checkstyle", "gradle-plugin", "consent-management-platform"))
     }
+  }
+}
+
+tasks {
+  withType<Test> {
+    useJUnitPlatform()
   }
 }
