@@ -34,9 +34,9 @@ Run `gradle build` and validate that:
 ## Technologies
 [Checkstyle](https://checkstyle.org/) is a development tool that can be used to automatically validate whether Java code adheres to specified code style rules, which reduces the effort to maintain consistent coding standards.
 
-[GitHub Packages](https://docs.github.com/en/packages) is used to publish the Checkstyle config files for consumption by other Java projects.
-
 [Gradle](https://docs.gradle.org) is used to build the project and manage package dependencies.
+
+[Gradle Plugin Portal](https://plugins.gradle.org) is used to publish the plugin for use by other Java Gradle projects.
 
 ## License
 The code in this project is released under the [GPL-3.0 License](LICENSE).
