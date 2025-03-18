@@ -3,15 +3,6 @@ This package contains shared checkstyle config files for use across Java project
 
 ## Usage
 
-### Step 1: Prerequisite GitHub credentials set-up
-Follow [GitHub's "Managing your personal access tokens" guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) to set up a personal access token that has `repo` and `read:packages` permissions.
-
-Set up a `GITHUB_USERNAME` environment variable matching your GitHub username.
-
-Set up a `GITHUB_TOKEN` environment variable matching your GitHub personal access token.
-
-### Step 2: Gradle build file set-up
-
 Merge the following code into your build.gradle.kts file:
 
 ```kotlin
@@ -34,8 +25,6 @@ pluginManagement {
     }
 }
 ```
-
-### Step 3: Validate gradle builds run checkstyle
 
 Run `gradle build` and validate that:
 1. config/checkstyle/checkstyle.xml and config/checkstyle/suppressions.xml files are created
